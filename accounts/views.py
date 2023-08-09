@@ -8,8 +8,9 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.contrib.auth import login
 from rest_framework import viewsets
 from django.contrib.auth.models import User
-
-
+from .serializers import ProfileSerializer
+from rest_framework.views import APIView
+from .models import profile
 
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
@@ -32,3 +33,8 @@ class LoginAPI(KnoxLoginView):
         login(request, user)
         return super(LoginAPI, self).post(request, format=None)
 
+class ProfileView(APIView):
+    def get(self, request):
+        serializer = ProfileSerializer(request.user.profile, context={'request': request})
+        return Response(serializer.data)
+    

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Track, userCustom
+from .models import userCustom,profile
 
 class userCustomAdmin(admin.ModelAdmin):
     list_display = ('username', 'email', 'track')
@@ -8,4 +8,5 @@ class userCustomAdmin(admin.ModelAdmin):
     ordering = ('username',)
 
 admin.site.register(userCustom, userCustomAdmin)  # Corrected registration
-admin.site.register(Track)
+
+admin.site.register(profile)
