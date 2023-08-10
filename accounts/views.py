@@ -11,6 +11,8 @@ from django.contrib.auth.models import User
 from .serializers import ProfileSerializer
 from rest_framework.views import APIView
 from .models import profile
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import SessionAuthentication,BasicAuthentication
 
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
@@ -34,7 +36,9 @@ class LoginAPI(KnoxLoginView):
         return super(LoginAPI, self).post(request, format=None)
 
 class ProfileView(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         serializer = ProfileSerializer(request.user.profile, context={'request': request})
         return Response(serializer.data)
-    

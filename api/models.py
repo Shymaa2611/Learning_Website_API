@@ -9,7 +9,7 @@ class Track(models.Model):
 class RoadMaps(models.Model):
     roadmap=models.FileField(upload_to='roadMaps/')
     def __str__(self):
-        return self.roadmap
+        return str(self.roadmap)
 class playList(models.Model):
     link=models.CharField(max_length=100)
     def __str__(self):
@@ -18,4 +18,4 @@ class playList(models.Model):
 class Resources(models.Model):
     resource=models.FileField('Rescourses/')
     def __str__(self):
-        return self.resource
+        return str(self.resource)

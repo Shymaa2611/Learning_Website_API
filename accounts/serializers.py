@@ -34,24 +34,31 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()
+    username = serializers.SerializerMethodField() 
     roadmaps = serializers.SerializerMethodField()
-    playList= serializers.SerializerMethodField()
-    resource=serializers.SerializerMethodField()
+    playList = serializers.SerializerMethodField()
+    resource = serializers.SerializerMethodField()
 
     class Meta:
         model = profile
-        fields = ['user', 'roadmaps','playList','resource']
-
+        fields = ['username', 'roadmaps', 'playList', 'resource']
+    def get_username(self, obj):
+        return obj.user.username
     def get_roadmaps(self, obj):
-        roadmap =RoadMaps.objects.filter(user=obj.user)
-        serializer = roadMapsSerilizers(roadmap, many=True, context=self.context)
-        return serializer.data
+     roadmaps = RoadMaps.objects.filter(profile=obj)
+     serializer = roadMapsSerilizers(roadmaps, many=True, context=self.context)
+     return serializer.data
+
     def get_playList(self, obj):
-        playlist=playList.objects.filter(user=obj.user)
-        serializer =PlayListSerilizers(playlist, many=True, context=self.context)
-        return serializer.data
+      playlist = playList.objects.filter(profile=obj)
+      serializer = PlayListSerilizers(playlist, many=True, context=self.context)
+      return serializer.data
+
     def get_resource(self, obj):
-        resources=Resources.objects.filter(user=obj.user)
-        serializer = resourcesSerilizers(resources, many=True, context=self.context)
-        return serializer.data
+       resources = Resources.objects.filter(profile=obj)
+       serializer = resourcesSerilizers(resources, many=True, context=self.context)
+       return serializer.data
+
+
+
+
