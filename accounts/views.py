@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer
+from .serializers import UserSerializer, RegisterSerializer,contactSerializer
 from knox.views import LoginView as KnoxLoginView
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.contrib.auth import login
@@ -10,7 +10,7 @@ from rest_framework import viewsets
 from django.contrib.auth.models import User
 from .serializers import ProfileSerializer
 from rest_framework.views import APIView
-from .models import profile
+from .models import profile,Contact
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication,BasicAuthentication
 
@@ -42,3 +42,7 @@ class ProfileView(APIView):
     def get(self, request):
         serializer = ProfileSerializer(request.user.profile, context={'request': request})
         return Response(serializer.data)
+    
+class contactView(generics.ListCreateAPIView):
+    queryset=Contact.objects.all()
+    serializer_class=contactSerializer

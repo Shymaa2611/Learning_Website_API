@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from api.models import playList,Resources,RoadMaps
 from api.models import Track
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class userCustom(AbstractUser):
@@ -44,3 +45,11 @@ def create_profile(sender,**kwargs):
 post_save.connect(create_profile,sender=userCustom)
     
    
+class Contact(models.Model):
+    first_name=models.CharField(max_length=150)
+    last_name=models.CharField(max_length=150)
+    email=models.EmailField()
+    phone_number = PhoneNumberField(blank=True, null=True)
+    message=models.TextField()
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"

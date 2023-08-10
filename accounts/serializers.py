@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import profile
+from .models import profile,Contact
 from api.serializers import PlayListSerilizers,roadMapsSerilizers,trackSerilizers,resourcesSerilizers
 from api.models import playList,Resources,RoadMaps,Track
 
@@ -59,6 +59,11 @@ class ProfileSerializer(serializers.ModelSerializer):
        serializer = resourcesSerilizers(resources, many=True, context=self.context)
        return serializer.data
 
+
+class contactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Contact
+        fields='__all__'
 
 
 

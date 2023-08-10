@@ -1,0 +1,10 @@
+Login     (complete)
+SignUp    (complete)
+Profile   (complete)
+Contact   (complete)
+Task      (not)
+   - Question
+   - Duration
+   - correct answer
+   - user answer
+   - score 
